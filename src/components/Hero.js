@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Cards from "./Cards";
+import { useState } from "react";
+import HeadHome from "./HeadHome";
+import ProfHome from "./ProfHome";
 function Hero() {
   return (
     <div>
@@ -26,8 +29,9 @@ function Hero() {
                   </span>
                 </h1>
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                  By using our product , headmasters can track task of their
-                  department teachers and rate them
+                  Now Head of the departments can track task of their department
+                  Professors and rate their tasks and Professors can be more
+                  efficient and effective
                 </p>
                 <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                   <div className="rounded-md shadow">

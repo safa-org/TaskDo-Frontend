@@ -1,18 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const navigation = [
-  { name: "Product", href: "#" },
-  { name: "Features", href: "#" },
-  { name: "Marketplace", href: "#" },
-  { name: "Company", href: "#" },
+  // { name: "Product", href: "#" },
+  // { name: "Features", href: "#" },
+  // { name: "Marketplace", href: "#" },
+  { name: "Signup", href: "/register" },
 ];
 function Navbar() {
+  const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  useEffect(() => {
+    if (localStorage.getItem("AccessToken")) {
+      setIsAuthenticated(true);
+    }
+  }, [localStorage.getItem("AccessToken")]);
+
   return (
     <div>
       <Popover>
@@ -28,7 +37,7 @@ function Navbar() {
                   <img
                     alt="Workflow"
                     className="h-8 w-auto sm:h-10"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                    src="taskdo-logo2.png"
                   />
                 </Link>
                 <div className="-mr-2 flex items-center md:hidden">
@@ -41,20 +50,43 @@ function Navbar() {
             </div>
             <div className="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
               {navigation.map((item) => (
-                <a
+                <Link
                   key={item.name}
-                  href={item.href}
+                  to={item.href}
                   className="font-medium text-gray-500 hover:text-gray-900"
                 >
                   {item.name}
-                </a>
+                </Link>
               ))}
-              <a
-                href="#"
+              {isAuthenticated ? (
+                <>
+                  <button
+                    onClick={() => {
+                      localStorage.clear("AccessToken");
+                      navigate("/");
+                      window.location.reload(true);
+                    }}
+                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                  >
+                    Log Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                  >
+                    Log in
+                  </Link>
+                </>
+              )}
+              {/* <Link
+                to="/login"
                 className="font-medium text-indigo-600 hover:text-indigo-500"
               >
                 Log in
-              </a>
+              </Link> */}
             </div>
           </nav>
         </div>
@@ -77,7 +109,8 @@ function Navbar() {
                 <div>
                   <img
                     className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                    // src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                    src="taskdo-logo2.svg"
                     alt=""
                   />
                 </div>
